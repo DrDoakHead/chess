@@ -3,9 +3,14 @@
 	accessed staticly
 */
 
-enum Color
+#ifndef COLOR_H
+#define COLOR_H
+
+typedef enum Color
 {
 	UNKNOWN,
 	BLACK,
 	WHITE
 };
+
+#endif // COLOR_H

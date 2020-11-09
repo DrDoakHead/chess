@@ -6,7 +6,6 @@
 
 Rook::Rook()
 {
-	//@TODO auto-gen constructor
 }
 
 Rook::Rook(const Position& currentPosition)
@@ -14,9 +13,18 @@ Rook::Rook(const Position& currentPosition)
 	m_currentPosition = currentPosition;
 }
 
-bool Rook::isMoveValid(const Position& endPosition)
+Rook::~Rook()
 {
-    // Attempt to move to the same cell
+}
+
+std::string Rook::toString()
+{
+    return "ROOK";
+}
+
+bool Rook::isMoveValid(const Position& endPosition) const
+{
+    // Don't allow moving to the same cell
     if (m_currentPosition == endPosition)
     {
         return false;
@@ -83,11 +91,10 @@ bool Rook::isMoveValid(const Position& endPosition)
     return true;
 }
 
-void Rook::move(const Position& endPosition)
+void Rook::move(const Position& endPosition) const
 {
     if (isMoveValid(endPosition))
     {
 
     }
-
 }

@@ -3,18 +3,14 @@
 */
 
 #include "Position.h"
-#include <stdexcept>
-#include <stdio.h>
 
-/*
-* Default constructor.  Initalize position to invalid (0, 0)
-*/
-Position::Position()
+Position::Position() :
+	m_x(0),
+	m_y(0)
 {
-	// TODO: Autogen constructor
 }
 
-Position::Position(const uint8_t x, const uint8_t y)
+Position::Position(const int8_t x, const int8_t y)
 {
 	if (isNumberValid(x) && isNumberValid(y))
 	{
@@ -23,12 +19,16 @@ Position::Position(const uint8_t x, const uint8_t y)
 	}
 }
 
+Position::~Position()
+{
+}
+
 int8_t Position::getX() const
 {
 	return m_x;
 }
 
-void Position::setX(int8_t x)
+void Position::setX(const int8_t x)
 {
 	if (isNumberValid(x))
 	{
@@ -41,12 +41,20 @@ int8_t Position::getY() const
 	return m_y;
 }
 
-void Position::setY(int8_t y)
+void Position::setY(const int8_t y)
 {
 	if (isNumberValid(y))
 	{
 		m_y = y;
 	}
+}
+
+std::string Position::toString() const
+{
+	std::string output;
+	output = "x = " + m_x;
+	output += ", y = " + m_y;
+	return output;
 }
 
 Position Position::operator=(const Position& rhs)
@@ -59,7 +67,7 @@ Position Position::operator=(const Position& rhs)
 	return *this;
 }
 
-bool Position::operator==(const Position& rhs)
+bool Position::operator==(const Position& rhs) const
 {
 	if (m_x != rhs.m_x || m_y != rhs.m_y)
 	{
@@ -68,7 +76,7 @@ bool Position::operator==(const Position& rhs)
 	return true;
 }
 
-bool Position::operator!=(const Position& rhs)
+bool Position::operator!=(const Position& rhs) const
 {
 	if (this == &rhs)
 	{
@@ -105,7 +113,7 @@ Position Position::operator-(const Position& rhs)
 	}
 }
 
-bool Position::isNumberValid(const int8_t numToCheck)
+bool Position::isNumberValid(const int8_t numToCheck) const
 {
 	if (numToCheck > 0 && numToCheck < 9)
 	{
@@ -113,7 +121,6 @@ bool Position::isNumberValid(const int8_t numToCheck)
 	}
 	else
 	{
-		//std::cout << "invalid number given" << std::endl;
 		return false;
 	}
 }

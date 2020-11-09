@@ -4,13 +4,32 @@
 	functions that the pieces need to implement.
 */
 
+#ifndef PIECE_H
+#define PIECE_H
+
 #include "Color.h"
 #include "Position.h"
+#include "TypeOfPiece.h"
 
 
 class Piece
 {
   public:
+
+	/*
+	* Default Constructor
+	*/
+	Piece();
+
+	/*
+	* Destructor
+	*/
+	virtual ~Piece();
+
+	/*
+	* Construct a piece with the specified color
+	*/
+	Piece(Color color);
 	  
 	/*
 	 * gets the color of the piece
@@ -25,17 +44,15 @@ class Piece
 	void setColor(Color color);
 
 	/*
-	 * determine if move is valid by comparing the current position to the end position
-	 */
-	virtual bool isMoveValid(const Position& endPosition) = 0;
-
-	/*
-	* move the piece from the start position to the end position
+	* gets the type of piece.  This will trigger the derived class
+	* to return its type
 	*/
-	virtual void move(const Position& endPosition) = 0;
+	virtual TypeOfPiece::PieceType getType() const;
 
   protected:
 	
 	Color m_color;
 	Position m_currentPosition;
 };
+
+#endif // PIECE_H
