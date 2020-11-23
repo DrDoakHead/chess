@@ -39,6 +39,15 @@ bool Square::operator==(const Square& rhs) const
     return false;
 }
 
+bool Square::operator!=(const Square& rhs) const
+{
+    if (this == &rhs)
+    {
+        return false;
+    }
+    return true;
+}
+
 bool Square::isOccupied() const 
 {
     if (m_piece == nullptr) {

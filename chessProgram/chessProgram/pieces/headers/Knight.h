@@ -1,27 +1,25 @@
 /**
- * This class holds the methods of the Rook piece
- *
+ * Methods for the Knight class
  */
-#ifndef ROOK_H
-#define ROOK_H
+
+#ifndef KNIGHT_H
+#define KNIGHT_H
 
 #include "Piece.h"
 
-class Rook : public Piece
+class Knight : public Piece
 {
-
   public:
-
     /**
-     * Create a Rook
-     * @param color The color the rook belongs to
+     * Create a Knight
+     * @param color The color the Knight belongs to
      */
-    Rook(Color color);
+    Knight(Color color);
 
     /*
     * Destructor
     */
-    virtual ~Rook();
+    virtual ~Knight();
 
     /*
     * copydoc Piece::isValidMove
@@ -34,4 +32,4 @@ class Rook : public Piece
     std::vector<Position> getPath(const Position& initPos, const Position& finalPos) const;
 };
 
-#endif // ROOK_H
+#endif // !KNIGHT_H

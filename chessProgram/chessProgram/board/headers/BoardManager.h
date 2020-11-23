@@ -10,7 +10,7 @@
 #include "Board.h"
 #include "TypeOfPiece.h"
 #include "Position.h"
-#include <list>
+#include "Move.h"
 #include <vector>
 
 class BoardManager 
@@ -49,7 +49,7 @@ class BoardManager
      *
      * @return List The list of moves
      */
-    std::list<Move> getMoveList() const;
+    std::vector<Move> getMoveList() const;
 
     /**
      * Returns the board object
@@ -80,7 +80,7 @@ class BoardManager
      *
      * @return boolean true if gameOver, else false
      */
-    bool isGameOver() const;
+    bool isGameOver();
 
     /**
      * Returns if the color is checkmated or not.
@@ -88,7 +88,7 @@ class BoardManager
      * @param color - the color to check checkmate for
      * @return bool true if checkmate, else false
      */
-    bool isCheckmate(Color color) const;
+    bool isCheckmate(Color color);
 
     /**
      * This undoes the previous move.
@@ -99,9 +99,9 @@ class BoardManager
      * This function returns all the valid moves a square/piece can make
      *
      * @param position - the position of the current piece
-     * @return Square[] vector of possible squares
+     * @return vector of squares of possible squares
      */
-    std::vector<Square> getValidMoves(const Position& position) const;
+    std::vector<Square> getValidMoves(const Position& position);
 
     /**
      * Returns the array of squares of the pieces that are attacking the King If
@@ -147,7 +147,7 @@ class BoardManager
      * @param finalSquare - final Square
      * @return bool true if the move makes check, else false
      */
-    bool moveMakesCheck(const Square& initSquare, const Square& finalSquare);
+    bool moveMakesCheck(Square& initSquare, Square& finalSquare);
 
     /**
      * Gets the square of the King
@@ -172,13 +172,13 @@ class BoardManager
      * @param finalSquare - final Square
      * @return bool true if the pawn capture is valid, else false
      */
-    bool isValidPawnCapture(const Square& initSquare, const Square& finalSquare);
+    bool isValidPawnCapture(const Square& initSquare, const Square& finalSquare) const;
 
     /**
      * @param square - the square of the piece
      * @return bool true if this piece has been moved or captured, else false
      */
-    bool hasPieceMoved(const Square& square);
+    bool hasPieceMoved(const Square& square) const;
 
     /**
      * Checks if it is valid Castling move
@@ -187,7 +187,7 @@ class BoardManager
      * @param rookSquare - the square of the rook
      * @return bool true if this is valid Castling, else false
      */
-    bool isValidCastling(const Square& kingSquare, const Square& rookSquare);
+    bool isValidCastling(Square& kingSquare, Square& rookSquare);
 
     /**
      * Makes a castle move.
@@ -207,7 +207,7 @@ class BoardManager
      * @return bool true if the path is clear, else false
      */
     bool isPathClear(const std::vector<Position>& path, 
-        const Position& initPosition, const Position& finalCoordinate);
+        const Position& initPosition, const Position& finalCoordinate) const;
 
     /**
      * Checks trivial movement. If a sane move is being made it returns true.
@@ -215,7 +215,7 @@ class BoardManager
      * @param finalSquare - the final square
      * @return bool true if a move is valid, false if invalid
      */
-    bool isSaneMove(const Square& initSquare, const Square& finalSquare);
+    bool isSaneMove(const Square& initSquare, const Square& finalSquare) const;
 
     /**
      * Checks if the piece can make a valid movement to the square.
@@ -223,7 +223,7 @@ class BoardManager
      * @param finalSquare - final Square
      * @return bool true if move is valid, else false
      */
-    bool isValidMovement(const Square& initSquare, const Square& finalSquare);
+    bool isValidMovement(const Square& initSquare, const Square& finalSquare) const;
 
     /**
      * Checks if the given move is valid and safe. Calls the isValidMovement()
@@ -233,13 +233,18 @@ class BoardManager
      * @param finalSquare - the final Square
      * @return bool true if move is valid, else false
      */
-    bool isValidMove(const Square& initSquare, const Square& finalSquare) const;
+    bool isValidMove(Square& initSquare, Square& finalSquare);
+
+    template <typename T> int sgn(T val)
+    {
+        return (T(0) < val) - (val < T(0));
+    }
 
   protected:
 
     Board board;                ///< the board in play
     Color currentPlayer;        ///< color of the active player
-    std::list<Move> moveList;   ///< list of moves taken
+    std::vector<Move> moveList; ///< list of moves taken
 };
 
 #endif // BOARD_MANAGER_H

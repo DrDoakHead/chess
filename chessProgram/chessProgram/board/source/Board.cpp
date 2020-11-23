@@ -3,6 +3,12 @@
 */
 
 #include "Board.h"
+#include "Rook.h"
+#include "Bishop.h"
+#include "Knight.h"
+#include "Pawn.h"
+#include "Queen.h"
+//#include "King.h"
 
 Board::Board()
 {
@@ -35,42 +41,56 @@ void Board::setSquares()
 
 void Board::setWhitePieces() 
 {
-    board[2][0].setPiece(new Bishop(WHITE));
-    board[5][0].setPiece(new Bishop(WHITE));
-    board[1][0].setPiece(new Knight(WHITE));
-    board[6][0].setPiece(new Knight(WHITE));
-    board[0][0].setPiece(new Rook(WHITE));
-    board[7][0].setPiece(new Rook(WHITE));
-    board[3][0].setPiece(new Queen(WHITE));
-    board[4][0].setPiece(new King(WHITE));
-    board[0][1].setPiece(new Pawn(WHITE));
-    board[1][1].setPiece(new Pawn(WHITE));
-    board[2][1].setPiece(new Pawn(WHITE));
-    board[3][1].setPiece(new Pawn(WHITE));
-    board[4][1].setPiece(new Pawn(WHITE));
-    board[5][1].setPiece(new Pawn(WHITE));
-    board[6][1].setPiece(new Pawn(WHITE));
-    board[7][1].setPiece(new Pawn(WHITE));
+    std::shared_ptr<Rook> rook(new Rook(WHITE));
+    std::shared_ptr<Bishop> bishop(new Bishop(WHITE));
+    std::shared_ptr<Knight> knight(new Knight(WHITE));
+    std::shared_ptr<Pawn> pawn(new Pawn(WHITE));
+    std::shared_ptr<Queen> queen(new Queen(WHITE));
+    std::shared_ptr<King> king(new King(WHITE));
+
+    board[2][0].setPiece(bishop);
+    board[5][0].setPiece(bishop);
+    board[1][0].setPiece(knight);
+    board[6][0].setPiece(knight);
+    board[0][0].setPiece(rook);
+    board[7][0].setPiece(rook);
+    board[3][0].setPiece(queen);
+    board[4][0].setPiece(king);
+    board[0][1].setPiece(pawn);
+    board[1][1].setPiece(pawn);
+    board[2][1].setPiece(pawn);
+    board[3][1].setPiece(pawn);
+    board[4][1].setPiece(pawn);
+    board[5][1].setPiece(pawn);
+    board[6][1].setPiece(pawn);
+    board[7][1].setPiece(pawn);
 }
 
 void Board::setBlackPieces()
 {
-    board[2][7].setPiece(new Bishop(BLACK));
-    board[5][7].setPiece(new Bishop(BLACK));
-    board[1][7].setPiece(new Knight(BLACK));
-    board[6][7].setPiece(new Knight(BLACK));
-    board[0][7].setPiece(new Rook(BLACK));
-    board[7][7].setPiece(new Rook(BLACK));
-    board[3][7].setPiece(new Queen(BLACK));
-    board[4][7].setPiece(new King(BLACK));
-    board[0][6].setPiece(new Pawn(BLACK));
-    board[1][6].setPiece(new Pawn(BLACK));
-    board[2][6].setPiece(new Pawn(BLACK));
-    board[3][6].setPiece(new Pawn(BLACK));
-    board[4][6].setPiece(new Pawn(BLACK));
-    board[5][6].setPiece(new Pawn(BLACK));
-    board[6][6].setPiece(new Pawn(BLACK));
-    board[7][6].setPiece(new Pawn(BLACK));
+    std::shared_ptr<Rook> rook(new Rook(BLACK));
+    std::shared_ptr<Bishop> bishop(new Bishop(BLACK));
+    std::shared_ptr<Knight> knight(new Knight(BLACK));
+    std::shared_ptr<Pawn> pawn(new Pawn(BLACK));
+    std::shared_ptr<Queen> queen(new Queen(WHITE));
+    std::shared_ptr<King> king(new King(WHITE));
+
+    board[2][7].setPiece(bishop);
+    board[5][7].setPiece(bishop);
+    board[1][7].setPiece(knight);
+    board[6][7].setPiece(knight);
+    board[0][7].setPiece(rook);
+    board[7][7].setPiece(rook);
+    board[3][7].setPiece(queen);
+    board[4][7].setPiece(king);
+    board[0][6].setPiece(pawn);
+    board[1][6].setPiece(pawn);
+    board[2][6].setPiece(pawn);
+    board[3][6].setPiece(pawn);
+    board[4][6].setPiece(pawn);
+    board[5][6].setPiece(pawn);
+    board[6][6].setPiece(pawn);
+    board[7][6].setPiece(pawn);
 }
 
 std::vector<std::vector<Square> > Board::getBoard() const
@@ -95,25 +115,14 @@ Square Board::getSquare(const Position& position) const
 
 void Board::makeMove(const Position& startPosition, const Position& finalPosition)
 {
-    //makeMove(getSquare(startPosition), getSquare(finalPosition));
-}
-
-void Board::setPiece(const Position& position, const std::shared_ptr<Piece>& piece)
-{
-    getSquare(position).setPiece(piece);
-}
-
-void Board::capturePiece(Square& square)
-{
-    if (square.isOccupied())
-    {
-        square.releasePiece();
-    }
+    Square initSquare = getSquare(startPosition);
+    Square finalSquare = getSquare(finalPosition);
+    makeMove(initSquare, finalSquare);
 }
 
 void Board::makeMove(Square& initSquare, Square& finalSquare)
 {
-    // if there is a piece here, capture it
+    //Has a piece been captured;
     if (finalSquare.isOccupied())
     {
         capturePiece(finalSquare);
@@ -121,6 +130,19 @@ void Board::makeMove(Square& initSquare, Square& finalSquare)
     //Make the move
     finalSquare.setPiece(initSquare.getPiece());
     initSquare.releasePiece();
+}
+
+void Board::setPiece(const Position& position, const std::shared_ptr<Piece>& piece)
+{
+    getSquare(position).setPiece(piece);
+}
+
+void Board::capturePiece(Square& square) const
+{
+    if (square.isOccupied())
+    {
+        square.releasePiece();
+    }
 }
 
 void Board::printBoard() 

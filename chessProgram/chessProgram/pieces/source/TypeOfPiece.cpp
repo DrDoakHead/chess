@@ -5,7 +5,7 @@
 #include "TypeOfPiece.h"
 
 TypeOfPiece::TypeOfPiece() :
-	pieceType(UNKNOWN)
+	pieceType(TypeOfPiece::PieceType::UNKNOWN)
 {
 }
 
@@ -22,8 +22,6 @@ std::string TypeOfPiece::toString() const
 {
 	switch (pieceType)
 	{
-		case UNKNOWN:
-			return "UNKNOWN";
 		case KING:
 			return "KING";
 		case ROOK:
@@ -34,6 +32,9 @@ std::string TypeOfPiece::toString() const
 			return "BISHOP";
 		case PAWN:
 			return "PAWN";
+		case UNKNOWN: //fall through
+		default:
+			return "UNKNOWN";
 	}
 }
 
@@ -41,8 +42,6 @@ std::string TypeOfPiece::toString(PieceType type)
 {
 	switch (type)
 	{
-	case UNKNOWN:
-		return "UNKNOWN";
 	case KING:
 		return "KING";
 	case ROOK:
@@ -53,6 +52,9 @@ std::string TypeOfPiece::toString(PieceType type)
 		return "BISHOP";
 	case PAWN:
 		return "PAWN";
+	case UNKNOWN: // fall through
+	default:
+		return "UNKNOWN";
 	}
 }
 

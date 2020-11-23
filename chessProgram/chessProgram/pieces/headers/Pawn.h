@@ -1,27 +1,25 @@
 /**
- * This class holds the methods of the Rook piece
- *
+ * Methods of the Pawn class
  */
-#ifndef ROOK_H
-#define ROOK_H
+
+#ifndef PAWN_H
+#define PAWN_H
 
 #include "Piece.h"
 
-class Rook : public Piece
+class Pawn : public Piece
 {
-
-  public:
-
+public:
     /**
-     * Create a Rook
-     * @param color The color the rook belongs to
+     * Construtor
+     * @param color - The color the piece belongs to
      */
-    Rook(Color color);
+    Pawn(Color Color);
 
     /*
     * Destructor
     */
-    virtual ~Rook();
+    virtual ~Pawn();
 
     /*
     * copydoc Piece::isValidMove
@@ -34,4 +32,4 @@ class Rook : public Piece
     std::vector<Position> getPath(const Position& initPos, const Position& finalPos) const;
 };
 
-#endif // ROOK_H
+#endif // PAWN_H

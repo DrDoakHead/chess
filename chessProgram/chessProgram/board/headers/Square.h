@@ -47,12 +47,21 @@ public:
 
     /**
      * Equality operator
-     * Checks if two square are equal.  Squares are considere equal if they have
+     * Checks if two square are equal.  Squares are considered equal if they have
      * the same position
      * @param rhs the right hand side to compare to
-     * @return boolean true if the squares are equal, else false
+     * @return bool true if the squares are equal, else false
      */
     bool operator==(const Square& rhs) const;
+
+    /*
+     * Inequality operator
+     * Checks if two squares are not equal.  Squares are considered not equal if
+     * they have different positions
+     * @param rhs the right hand side to compare to
+     * @return bool true if the squares are equal, else false
+     */
+    bool operator!=(const Square& rhs) const;
 
     /**
      * Checks if the square contains a piece

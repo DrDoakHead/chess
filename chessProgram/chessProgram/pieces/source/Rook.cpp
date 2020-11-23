@@ -4,97 +4,46 @@
 
 #include "Rook.h"
 
-Rook::Rook()
+Rook::Rook(Color color)
 {
-}
-
-Rook::Rook(const Position& currentPosition)
-{
-	m_currentPosition = currentPosition;
+    m_color = color;
+    m_typeOfPiece = TypeOfPiece::PieceType::ROOK;
 }
 
 Rook::~Rook()
 {
 }
 
-std::string Rook::toString()
+bool Rook::isValidMove(const Position& initPos, const Position& finalPos) const
 {
-    return "ROOK";
-}
-
-bool Rook::isMoveValid(const Position& endPosition) const
-{
-    // Don't allow moving to the same cell
-    if (m_currentPosition == endPosition)
-    {
+    if (initPos == finalPos)
+    { 
         return false;
     }
-
-    // Collision detection
-    if (m_currentPosition.getX() == endPosition.getX())
+    // intersecting pieces are handled in the board manager class
+    if (initPos.getX() == finalPos.getX() ||
+        initPos.getY() == finalPos.getY())
     {
-        // Move horizontal
-        if (m_currentPosition.getY() < endPosition.getY()) 
+        return true;
+    }
+    return false;
+}
+
+std::vector<Position> Rook::getPath(const Position& initPos, const Position& finalPos) const 
+{
+    std::vector<Position> path;
+    int pathLength = abs(initPos.getX() - finalPos.getX())
+        + abs(initPos.getY() - finalPos.getY()) + 1;
+    for (int i = 0; i < pathLength; i++)
+    {
+        if (initPos.getX() == finalPos.getX())
         {
-            // Move right
-            for (int8_t i = m_currentPosition.getY() + 1; i <= endPosition.getY(); ++i)
-            {
-                if (pieceAt(m_currentPosition.getX(), i) != EMPTY)
-                {
-                    return false;
-                }
-            }
+            path.push_back(Position(initPos.getX(), std::min(initPos.getY(), finalPos.getY()) + i));
         }
         else
         {
-            // Move left
-            for (int8_t i = m_currentPosition.getY() - 1; i >= endPosition.getY(); --i)
-            {
-                if (pieceAt(m_currentPosition.getX(), i) != EMPTY)
-                {
-                    return false;
-                }
-            }
+            path.push_back(Position(std::min(initPos.getX(), finalPos.getX()) + i, initPos.getY()));
         }
     }
-    else if (m_currentPosition.getY() == endPosition.getY()) 
-    {
-        // Move vertical
-        if (m_currentPosition.getX() < endPosition.getX()) 
-        {
-            // Move down
-            for (int8_t i = m_currentPosition.getX() + 1; i <= endPosition.getX(); ++i)
-            {
-                if (pieceAt(i, m_currentPosition.getY()) != EMPTY)
-                {
-                    return false;
-                }
-            }
-        }
-        else 
-        {
-            // Move up
-            for (int8_t i = m_currentPosition.getX() - 1; i >= endPosition.getX(); --i)
-            {
-                if (pieceAt(i, m_currentPosition.getY()) != EMPTY)
-                {
-                    return false;
-                }
-            }
-        }
-    }
-    else
-    {
-        // Not horizontal or vertical
-        return false;
-    }
-    return true;
-}
-
-void Rook::move(const Position& endPosition) const
-{
-    if (isMoveValid(endPosition))
-    {
-
-    }
+    return path;
 }

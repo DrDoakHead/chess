@@ -63,6 +63,13 @@ class Board
     void makeMove(const Position& startPosition, const Position& finalPosition);
 
     /**
+     * This makes a move from a square to another. **Move may be invalid**
+     * @param initSquare The initial Square.
+     * @param finalSquare The final Square
+     */
+    void makeMove(Square& initSquare, Square& finalSquare);
+
+    /**
      * This set the piece in the specified coordinate
      * @param coordinate Coordinate of the piece
      * @param piece The piece object to be set.
@@ -73,14 +80,7 @@ class Board
      * Captures the piece that is present in the square.
      * @param square The square of the piece
      */
-    void capturePiece(Square& square);
-
-    /**
-     * This makes a move from a square to another. **Move may be invalid**
-     * @param initSquare The initial Square.
-     * @param finalSquare The final Square
-     */
-    void makeMove(Square& initSquare, Square& finalSquare);
+    void capturePiece(Square& square) const;
 
     /**
      * This prints the board in the command line.
